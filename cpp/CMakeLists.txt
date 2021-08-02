@@ -1,0 +1,11 @@
+add_subdirectory(ptk)
+
+if (BUILD_UNIT_TESTS)
+    add_subdirectory(tests)
+endif()
+# if (BUILD_BENCHMARKS)
+#     add_subdirectory(benchmarks)
+# endif()
+# if (BUILD_PYTHON_MODULE)
+#     add_subdirectory(pybind)
+# endif()

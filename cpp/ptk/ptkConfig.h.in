@@ -1,0 +1,7 @@
+#define PTK_VERSION       "@PROJECT_VERSION@"
+
+// PTK info
+#define PTK_HOME          "@PROJECT_HOME@"
+#define PTK_DOCS          "@PROJECT_DOCS@"
+#define PTK_CODE          "@PROJECT_CODE@"
+#define PTK_ISSUES        "@PROJECT_ISSUES@"
