@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 
-from .time import Time, Duration
+from .common.time import Time, Duration
 
 
 
@@ -78,35 +78,18 @@ from datetime import date
 def _base_logger(msg, args, kwargs, throttle=None,
                  throttle_identical=False, level=None, once=False):
 
-    if len(args) > 0:
-        logging_name = args[0]
-        #reset args 
-        # if logging_name not in _logging_file_options:
-        #     raise LoggingException("Invalid logger: {}. Must be sensor, analyser, focus or nothing.".format(logging_name))
-        args = []
-    else:
-        pid = os.getpid()
-        # logging_name = pid_node_lookup(pid)
-        logging_name = "defaultlogger"
+    ptk_logger = logging.getLogger('ptkout')
 
-        # if logging_name is None:
-        #     logging_name = "bioscout-log.pid.{}".format(pid)
-    
-    print(logging_name)
-    # logging_file = _logging_folder_name + "/" + logging_name 
-    logging_file = logging_name
-    stream_hander = PtkStreamHandler()
-    ptk_logger = logging.getLogger(logging_file)
-    ptk_logger.setLevel(logging.INFO)
+    if not ptk_logger.hasHandlers():
+        stream_hander = PtkStreamHandler()
+        ptk_logger.addHandler(stream_hander)
 
-    ptk_logger.addHandler(stream_hander)
     name = kwargs.pop('logger_name', None)
-    
-
     if name:
         ptk_logger = ptk_logger.getChild(name)
     logfunc = getattr(ptk_logger, level)
 
+    ptk_logger.setLevel(logging.INFO)
 
 
     if once:
@@ -125,7 +108,6 @@ def _base_logger(msg, args, kwargs, throttle=None,
         if _logging_throttle(caller_id, throttle):
             logfunc(msg, *args, **kwargs)
     else:
-        print("here")
         logfunc(msg, *args, **kwargs)
 
 #These will act as normal log function
@@ -316,7 +298,7 @@ class PtkStreamHandler(logging.Handler):
         msg = msg.replace('${lineno}', '%s' % record.lineno) 
 
         record_name =  str(record.name)
-        log_path = "~/Code/" + record_name + ".log"
+        # log_path = "~/Code/" + record_name + ".log"
 
         # try:
         #     from rospy import get_name
@@ -326,14 +308,13 @@ class PtkStreamHandler(logging.Handler):
         # msg = msg.replace('${node}', node_name)
 
         msg += '\n'
-        print(msg)
-        # self._write(sys.stdout, msg, color)
+        # print(msg)
+        self._write(sys.stdout, msg, color)
 
     def _write(self, fd, msg, color):
-        with open(fd, "a") as file:
-            if self._colorize and color and hasattr(fd, 'isatty') and fd.isatty():
-                msg = color + msg + _color_reset
-            file.write(msg)
+        if self._colorize and color and hasattr(fd, 'isatty') and fd.isatty():
+            msg = color + msg + _color_reset
+        fd.write(msg)
 
 
 def sort_logging_files(*args):

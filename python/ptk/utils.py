@@ -3,6 +3,8 @@ import os
 import sys
 from threading import Lock
 import psutil
+import time
+from functools import wraps
 
 
 def get_environment_vars(key:str):
@@ -129,3 +131,21 @@ def is_process(process_name):
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
     return False
+
+def time_func(method):
+    """[Times how long a function takes to run. Can be used as a decorator]
+
+    Args:
+        method ([callable]): [The function to time]
+
+    Returns:
+        [Any]: [The function return values, if any]
+    """
+    @wraps(method)
+    def _impl(self, *method_args, **method_kwargs):
+        start_time = time.time()
+        values = method(self, *method_args, **method_kwargs)
+        end_time = time.time()
+        print("Timer: [{}] ran in {}s".format(method.__name__, end_time-start_time))
+        return values
+    return _impl

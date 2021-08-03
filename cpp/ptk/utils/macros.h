@@ -3,7 +3,6 @@
 
 // These macros were inspired mainly on Maplab's macros
 // https://github.com/ethz-asl/maplab
-
 #define PTK_POINTER_TYPEDEFS(TypeName)                 \
   typedef std::shared_ptr<TypeName> Ptr;                  \
   typedef std::shared_ptr<const TypeName> ConstPtr;       \

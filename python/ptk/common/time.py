@@ -1,5 +1,5 @@
 import datetime
-from .utils import inspect_frame
+from ptk.utils import inspect_frame
 
 import datetime
 import numpy as np
@@ -190,14 +190,14 @@ def Duration(period: float):
     """[Creates a duration object that can be used as a timedelta or as a simplistic way to
     keep a result true for a given period of time.
     
-    while bioscout.Duration(4):
+    while Duration(4):
         #do stuff
 
     will loop for 4 seconds before exiting. This is similar to
-    while bioscout.Time() < bioscout.Duration(4):
+    while Time() < Duration(4):
         #do stuff
 
-    bioscout.Duration(-1) will loop forever.
+    Duration(-1) will loop forever.
 
     ]
 
