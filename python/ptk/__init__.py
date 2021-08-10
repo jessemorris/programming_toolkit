@@ -8,8 +8,9 @@ import time
 
 global _is_shutdown
 _is_shutdown = False
+_sig_handler_init = False
 _exit_callbacks = []
-_origianl_sig_handler = signal.getsignal(signal.SIGINT)
+_origianl_sig_handler = None
 
 def is_shutdown():
     return _is_shutdown
@@ -27,11 +28,16 @@ def _handler(signum, frame):
     for cb in _exit_callbacks:
         cb()
     print("PTK: SIGINT recieved. Shutting down")
-    import sys
-    time.sleep(3) #wait some time to ensure threads are shutdown 
-    sys.exit(0)
+    # import sys
+    # time.sleep(3) #wait some time to ensure threads are shutdown 
+    # sys.exit(0)
 
 def _init_ptk_signal_handler():
-    signal.signal(signal.SIGINT, _handler)
+    global _sig_handler_init
+    if _sig_handler_init is False:
+        global _origianl_sig_handler
+        _origianl_sig_handler = signal.getsignal(signal.SIGINT)
+        signal.signal(signal.SIGINT, _handler)
+        _sig_handler_init = True
 
 _init_ptk_signal_handler()

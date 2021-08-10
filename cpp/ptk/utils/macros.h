@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 
 // These macros were inspired mainly on Maplab's macros
 // https://github.com/ethz-asl/maplab

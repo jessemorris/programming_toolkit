@@ -4,6 +4,7 @@ import inspect
 import logging
 import os
 import sys
+from enum import Enum
 
 from .common.time import Time, Duration
 
@@ -64,14 +65,8 @@ def _frame_to_caller_id(frame):
     return pickle.dumps(caller_id)
 
 
-# from .device import pid_node_lookup
 import os
 from datetime import date
-
-
-# _DEVICE_LOG = "bioscout-device"
-# _logging_file_options = ["sensors", "analyser", "focus", "bioscout-device"]
-# _logging_folder_name = date.today().strftime(("%Y_%m_%d"))
 
 
 
@@ -266,6 +261,14 @@ def logfatal_once(msg, *args, **kwargs):
     _base_logger(msg, args, kwargs, once=True, level='critical')
 
 
+
+class Level(Enum):
+    DEBUG = 0,
+    INFO = 1,
+    WARN = 2,
+    ERROR = 3,
+    EXCEPTION = 4
+
 _logging_to_level_names = {
     'DEBUG': ('DEBUG', '\033[32m'),
     'INFO': ('INFO', None),
@@ -273,12 +276,37 @@ _logging_to_level_names = {
     'ERROR': ('ERROR', '\033[31m'),
     'CRITICAL': ('FATAL', '\033[31m')
 }
+
+_level_to_quantity = {
+    Level.DEBUG: 0,
+    Level.INFO: 1,
+    Level.WARN: 2,
+    Level.ERROR: 3,
+    Level.EXCEPTION: 4
+}
+
+
+
 _color_reset = '\033[0m'
 
 LOGGING_FILE_FORMAT = '[${time}] [${severity}] [${file}:${lineno}]: ${message}'
 _defaultFormatter = logging.Formatter()
 
 import os
+
+
+_global_logging_level = Level.INFO
+
+def setPtkLoggingLevel(level):
+    if not isinstance(level, Level):
+        logerror("Level must be an instance of ptk.logging.Level")
+        return
+
+    _global_logging_level = level
+
+    
+
+
 
 
 class PtkStreamHandler(logging.Handler):

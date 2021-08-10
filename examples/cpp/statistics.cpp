@@ -2,21 +2,23 @@
 
 #include <iostream>
 
-int main() {
+int main(int argc, char **argv) {
 
-    ptk::utils::Statistics::SetPrintFrequency(1.0);
+    ptk::Program::init(argc, argv);
 
-    ptk::utils::StatsCollector stats("test");
-    std::cout << "herew" << std::endl;
-    PTK_INFO_MSG("yes");
-    PTK_ERROR_MSG("bad");
+    // ptk::utils::Statistics::SetPrintFrequency(1.0);
 
-    while (true)
-    {
-        stats.IncrementOne();
-        std::cout << ptk::utils::Statistics::Print();
-    }
+    // ptk::utils::StatsCollector stats("test");
+    // std::cout << "herew" << std::endl;
+    // PTK_INFO_MSG("yes");
+    // PTK_ERROR_MSG("bad");
+
+    // while (true)
+    // {
+    //     stats.IncrementOne();
+    //     std::cout << ptk::utils::Statistics::Print();
+    // }
     
-    return 0;
+    // return 0;
 
 }

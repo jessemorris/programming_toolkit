@@ -31,6 +31,7 @@ setup(
     entry_points={
         'console_scripts': [
             'ptkcv_thresholding=tools.ptk_cv_thresholding:main',
+            'ptklaunch=tools.ptklaunch:main'
         ]
     }
 )

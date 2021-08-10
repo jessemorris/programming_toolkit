@@ -111,6 +111,25 @@ def inspect_frame(index = 1):
     frame,filename,line_number,function_name,lines,index = inspect.stack()[index]
     return filename, line_number, function_name
 
+def is_process_alive(pid):
+    """[Checks if the process specified by the pid is running]
+
+    Args:
+        pid ([int]): [a process id]
+
+    Returns:
+        [bool]: [True if the pid exists]
+    """
+    #Iterate over the all the running process
+    for proc in psutil.process_iter():
+        try:
+            # Check if process name contains the given name string.
+            if proc.pid == pid:
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return False
+
 def is_process(process_name):
     """[Check if the running process is the same as the process name ie. we are that process]
 
@@ -132,6 +151,24 @@ def is_process(process_name):
             pass
     return False
 
+
+
+
+def process_name_from_pid(pid):
+    """[Gets the name of the process specified by the pid]
+
+    Args:
+        pid ([int]): [A process id]
+
+    Returns:
+        [str (or None)]: [The name of the process or None if the pid does not exists]
+    """
+    if is_process_alive(pid):
+        process = psutil.Process(pid)
+        return process.name()
+    return None
+
+
 def time_func(method):
     """[Times how long a function takes to run. Can be used as a decorator]
 
@@ -149,3 +186,17 @@ def time_func(method):
         print("Timer: [{}] ran in {}s".format(method.__name__, end_time-start_time))
         return values
     return _impl
+
+
+from  .common.types import FunctionSignature
+
+def inspect_func_params(func) -> FunctionSignature:
+    v = inspect.signature(func)
+    return FunctionSignature(v)
+
+
+# if __name__ == "__main__":
+#     def test(a, b, c=5):
+#         pass
+
+#     inspect_func_params(test)

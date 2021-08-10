@@ -29,6 +29,8 @@ configure_file("${PROJECT_SOURCE_DIR}/cpp/ptk/ptkConfig.h.in"
 add_library(ptk)
 
 add_subdirectory(utils)
+add_subdirectory(core)
+# add_subdirectory(common)
 
 
 # note: adding at least one real source file to any target that references
@@ -36,17 +38,9 @@ add_subdirectory(utils)
 target_sources(ptk PRIVATE
     # Open3DConfig.cpp
     $<TARGET_OBJECTS:utils>
-    # $<TARGET_OBJECTS:core>
-    # $<TARGET_OBJECTS:geometry>
-    # $<TARGET_OBJECTS:tgeometry>
-    # $<TARGET_OBJECTS:tgeometry_kernel>
-    # $<TARGET_OBJECTS:io>
-    # $<TARGET_OBJECTS:tio>
-    # $<TARGET_OBJECTS:ml_contrib>
-    # $<TARGET_OBJECTS:pipelines>
-    # $<TARGET_OBJECTS:tpipelines>
-    # $<TARGET_OBJECTS:utility>
-    # $<TARGET_OBJECTS:visualization>
+    $<TARGET_OBJECTS:core>
+    # $<TARGET_OBJECTS:common>
+
 )
 
 # if (BUILD_GUI)
@@ -63,7 +57,8 @@ target_sources(ptk PRIVATE
 
 # Source group for Visual Studio
 add_source_group(utils)
-# add_source_group(core)
+add_source_group(core)
+# add_source_group(common)
 # add_source_group(geometry)
 # add_source_group(tgeometry)
 # add_source_group(io)
