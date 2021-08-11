@@ -39,6 +39,30 @@ class ClassIterable():
             raise StopIteration
 
 
+class Statistics(object):
+
+    def __init__(self):
+        self._msg_count = 0
+        self._data_array = []
+
+    def addData(self, data):
+        self._data_array.append(data)
+
+    def getAvg(self):
+        return sum(self._data_array)/len(self._data_array)
+
+    def getMax(self):
+        if len(self._data_array) > 0:
+            return max(self._data_array)
+        return -1
+
+    def getMin(self):
+        if len(self._data_array) > 0:
+            return min(self._data_array)
+        return -1
+    
+
+
 import inspect
 
 class FunctionParam(object):

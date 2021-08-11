@@ -151,6 +151,15 @@ def is_process(process_name):
             pass
     return False
 
+def get_working_bash_directory():
+    """[Gets the current working directory that the terminal environment was last in, using the PWD
+    environment variable. This represents the location where a program was executed from.]
+
+    Returns:
+        [str]: [process working directory (PWD)]
+    """
+    return get_environment_vars("PWD")
+
 
 
 

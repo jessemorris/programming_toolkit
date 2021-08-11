@@ -301,7 +301,7 @@ def setPtkLoggingLevel(level):
     if not isinstance(level, Level):
         logerror("Level must be an instance of ptk.logging.Level")
         return
-
+    
     _global_logging_level = level
 
     

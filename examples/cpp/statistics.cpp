@@ -6,6 +6,9 @@ int main(int argc, char **argv) {
 
     ptk::Program::init(argc, argv);
 
+    const ptk::ProgramOptions* options = ptk::Program::getProgramOptions();
+    PTK_INFO_MSG(*options);
+
     // ptk::utils::Statistics::SetPrintFrequency(1.0);
 
     // ptk::utils::StatsCollector stats("test");

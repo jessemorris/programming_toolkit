@@ -20,7 +20,7 @@ namespace ptk {
             { "logging_dir", 'l',  "DIR", 0, "Logging directory. Required."},
             { "program_name", 'n',"FILE", 0, "Name of the run program. Optional."},
             { "verbose", 'v', "LOG", 0, "Level at which to log (DEBUG, INFO...). Optional."},
-            { "pid", 'd', "PID", 0, "Pid of the run program. Optional."},
+            { "pid", 'd', "PID", 0, "Pid of the run program. Optional."}, //actually unused becuase we can get pid interally
             { 0 } 
         };
 
