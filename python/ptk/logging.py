@@ -7,6 +7,11 @@ import sys
 from enum import Enum
 
 from .common.time import Time, Duration
+from .utils import program_name
+from .core import _format_file_name
+
+
+# def _construct_(file_name):
 
 
 
@@ -69,11 +74,18 @@ import os
 from datetime import date
 
 
+_logging_module = program_name()
 
 def _base_logger(msg, args, kwargs, throttle=None,
                  throttle_identical=False, level=None, once=False):
 
-    ptk_logger = logging.getLogger('ptkout')
+    if len(args) > 0:
+        #TODO: plus the pid so it remains unique?
+        logging_name = _format_file_name(args[0])
+    else:
+        logging_name = _logging_module
+    
+    ptk_logger = logging.getLogger(logging_name)
 
     if not ptk_logger.hasHandlers():
         stream_hander = PtkStreamHandler()
@@ -315,6 +327,8 @@ class PtkStreamHandler(logging.Handler):
         self._colorize = colorize
 
     def emit(self, record):
+        print(dir(record))
+        print(record.name)
         level, color = _logging_to_level_names[record.levelname]
         
         msg = LOGGING_FILE_FORMAT

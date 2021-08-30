@@ -1,5 +1,8 @@
 import ptk
 import cv2
+import ptk.common.patterns as ptk_pattern
+
+import logging
 # ptk.loginfo("here")
 # ptk.loginfo("here also")
 # # import time
@@ -31,11 +34,27 @@ import cv2
 # def test(a, b, c=5):
 #         pass
 
-import inspect
-print(cv2.Canny.__doc__)
-print(inspect.getargspec(cv2.Canny))
+# import inspect
+# print(cv2.Canny.__doc__)
+# print(inspect.getargspec(cv2.Canny))
+
+# logger = logging.getLogger("ptk.ptkout")
+
+# logger.info("A message")
+# ptk.loginfo("A message", "ptk.out")
+# ptk.loginfo("Another message")
 
 # function_params = ptk.utils.inspect_func_params(cv2.Canny)
 
 # for params in function_params:
 #     print(params)
+
+
+
+class Foo(object, metaclass=ptk_pattern.Meta):
+
+    @staticmethod
+
+
+print(Foo())
+#__call__

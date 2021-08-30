@@ -8,8 +8,6 @@
 #include <ostream>
 #include <sstream>
 
-//TODOS(jesse ) -> put in better namespacing so helper functions are more hidden from user and we only 
-//expose "public" macros at the top namespace level
 
 //define colour codes for logging
 //https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
@@ -73,7 +71,7 @@ namespace logging {
         //i'm just picking random colours *shurgs*
         switch(level) {
             case Level::DEBUG:
-                return TerminalColourCode::FG_GREEN;
+                return TerminalColourCode::FG_CYAN;
             case Level::INFO:
                 return TerminalColourCode::FG_DEFAULT;
             case Level::WARN:
@@ -81,7 +79,7 @@ namespace logging {
             case Level::ERROR:
                 return TerminalColourCode::FG_RED;
             case Level::EXCEPTION:
-                return TerminalColourCode::FG_CYAN;
+                return TerminalColourCode::FG_RED;
             default:
                 return TerminalColourCode::FG_DEFAULT; //for background colour
         }
@@ -197,9 +195,9 @@ namespace logging {
              * @return const Formatter 
              */
             static const Formatter formatException(const std::string& exceptionType, 
-                                                     const std::string& file_,
-                                                     int line_,
-                                                     const std::string& message) {
+                                                   const std::string& file_,
+                                                   int line_,
+                                                   const std::string& message) {
                 return Formatter(Level::EXCEPTION, file_, line_, message);
                 
             }

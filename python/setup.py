@@ -12,7 +12,6 @@ def read(fname):
 
     
 
-
 setup(
     name = "ptk",
     version = "0.0.1",

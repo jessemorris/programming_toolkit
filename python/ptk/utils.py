@@ -161,6 +161,25 @@ def get_working_bash_directory():
     return get_environment_vars("PWD")
 
 
+def program_name():
+    """[Gets the name of the current program using sys.argv]
+
+    Returns:
+        [str]: [Name of the executed program without file extensions]
+    """
+    program_path = sys.argv[0]
+    program_name_ = program_path.split("/")[-1]
+    # we still can have extensions
+    return program_name_.split(".")[0]
+
+def process_name():
+    """[Gets the name of the current running process]
+
+    Returns:
+        [str (or None)]: [The name of current process or None of does not exist (this should never happen)]
+    """
+    pid = os.getpid()
+    return process_name_from_pid(pid)
 
 
 def process_name_from_pid(pid):
@@ -174,6 +193,7 @@ def process_name_from_pid(pid):
     """
     if is_process_alive(pid):
         process = psutil.Process(pid)
+        print(process)
         return process.name()
     return None
 

@@ -8,6 +8,9 @@ import signal
 import time
 
 
+from .core.file_system import _construct_ptk_root_dir
+
+
 global _is_shutdown
 _is_shutdown = False
 _sig_handler_init = False
@@ -43,3 +46,4 @@ def _init_ptk_signal_handler():
         _sig_handler_init = True
 
 _init_ptk_signal_handler()
+_construct_ptk_root_dir()
