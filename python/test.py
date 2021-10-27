@@ -3,9 +3,12 @@ import cv2
 import ptk.common.patterns as ptk_pattern
 
 import logging
-# ptk.loginfo("here")
-# ptk.loginfo("here also")
-# # import time
+ptk.loginfo("here")
+ptk.loginfo("here also")
+import time
+while(True):
+	ptk.loginfo("Running...")
+	time.sleep(1)
 
 # # class FakeList():
 
@@ -51,10 +54,10 @@ import logging
 
 
 
-class Foo(object, metaclass=ptk_pattern.Meta):
+#class Foo(object, metaclass=ptk_pattern.Meta):
 
-    @staticmethod
+ #   @staticmethod
 
 
-print(Foo())
+#print(Foo())
 #__call__

@@ -327,8 +327,8 @@ class PtkStreamHandler(logging.Handler):
         self._colorize = colorize
 
     def emit(self, record):
-        print(dir(record))
-        print(record.name)
+        # print(dir(record)) //TODO: logging to file?
+        # print(record.name)
         level, color = _logging_to_level_names[record.levelname]
         
         msg = LOGGING_FILE_FORMAT

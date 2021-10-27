@@ -318,7 +318,7 @@ class ProcessManager(object):
         """
         self._process_list = []
         for process in process_configs:
-            print(process)
+            # print(process)
             self._process_list.append(Process(process))
 
         ptk.registerExitCallback(self.shutdownProcesses)
