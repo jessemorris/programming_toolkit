@@ -41,29 +41,29 @@ namespace common {
     using HashableColors = std::vector<HashableColor>;
 
     // For unordered map using Color as a Key.
-    struct ColorHasher {
-        size_t operator()(const HashableColor& k) const;
-    };
+    // struct ColorHasher {
+    //     size_t operator()(const HashableColor& k) const;
+    // };
 
-    class ColourManager {
+    // class ColourManager {
 
-        using ColourLabel = std::string;
-        using ColourId = int;
+    //     using ColourLabel = std::string;
+    //     using ColourId = int;
 
-        using LabelToColour = std::unordered_map<ColourLabel, HashableColor>;
+    //     using LabelToColour = std::unordered_map<ColourLabel, HashableColor>;
 
-        public:
-            ColourManager(const std::string& filename);
+    //     public:
+    //         ColourManager(const std::string& filename);
 
-            HashableColor get_colour_for_class_label(const std::string& label);
-            HashableColor get_colour_for_tracking_id(const int tracking_id);
+    //         HashableColor get_colour_for_class_label(const std::string& label);
+    //         HashableColor get_colour_for_tracking_id(const int tracking_id);
 
-            inline size_t number_of_classes() {return classes.size();}
+    //         inline size_t number_of_classes() {return classes.size();}
 
-        private:
-            LabelToColour label_to_color;
+    //     private:
+    //         LabelToColour label_to_color;
 
-    };
+    // };
 
 }
 
