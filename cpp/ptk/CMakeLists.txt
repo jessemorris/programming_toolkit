@@ -29,6 +29,7 @@ configure_file("${PROJECT_SOURCE_DIR}/cpp/ptk/ptkConfig.h.in"
 add_library(ptk)
 
 add_subdirectory(utilities)
+add_subdirectory(plugins)
 # add_subdirectory(core)
 # add_subdirectory(common)
 
@@ -37,6 +38,7 @@ add_subdirectory(utilities)
 # reference: https://cmake.org/cmake/help/v3.12/command/add_library.html#object-libraries
 target_sources(ptk PRIVATE
     $<TARGET_OBJECTS:utilities>
+    $<TARGET_OBJECTS:plugins>
     # $<TARGET_OBJECTS:core>
     # $<TARGET_OBJECTS:common>
 
@@ -44,6 +46,7 @@ target_sources(ptk PRIVATE
 
 # Source group for Visual Studio
 add_source_group(utils)
+add_source_group(plugins)
 # add_source_group(core)
 # add_source_group(common)
 # add_source_group(geometry)

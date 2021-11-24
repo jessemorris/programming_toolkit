@@ -1,5 +1,5 @@
 #include "program.h"
-#include "ptk/utils/logging.h"
+#include "ptk/utilities/logging.h"
 
 
 #include <argp.h>
@@ -66,7 +66,7 @@ namespace ptk {
 
         static struct argp argp = { options, parse_opt, args_doc, doc, 0, 0, 0 };
 
-    }
+    } //impl
 
     bool Program::is_init = false;
     ProgramOptions Program::program_options({});

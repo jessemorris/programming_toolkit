@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ptk/utils/macros.h"
+#include "ptk/utilities/macros.h"
 #include <iostream>
 
 namespace ptk {
