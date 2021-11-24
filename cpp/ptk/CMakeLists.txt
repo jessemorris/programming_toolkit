@@ -98,6 +98,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     DESTINATION ${PTK_INSTALL_INCLUDE_DIR}
     FILES_MATCHING
         PATTERN "*.h"
+        PATTERN "*.hpp"
         PATTERN "*.cuh"
 )
 
@@ -105,6 +106,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 install(FILES
         "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/ptkConfig.cmake"
         "${PROJECT_BINARY_DIR}/ptkConfigVersion.cmake"
+        "${PROJECT_SOURCE_DIR}/cmake/ptkBuildPlugin.cmake"
         DESTINATION "${PTK_INSTALL_CMAKE_DIR}" COMPONENT dev)
 
 # uninstall target
