@@ -28,36 +28,23 @@ configure_file("${PROJECT_SOURCE_DIR}/cpp/ptk/ptkConfig.h.in"
 
 add_library(ptk)
 
-add_subdirectory(utils)
-add_subdirectory(core)
+add_subdirectory(utilities)
+# add_subdirectory(core)
 # add_subdirectory(common)
 
 
 # note: adding at least one real source file to any target that references
 # reference: https://cmake.org/cmake/help/v3.12/command/add_library.html#object-libraries
 target_sources(ptk PRIVATE
-    # Open3DConfig.cpp
-    $<TARGET_OBJECTS:utils>
-    $<TARGET_OBJECTS:core>
+    $<TARGET_OBJECTS:utilities>
+    # $<TARGET_OBJECTS:core>
     # $<TARGET_OBJECTS:common>
 
 )
 
-# if (BUILD_GUI)
-#     target_sources(Open3D PRIVATE
-#         $<TARGET_OBJECTS:GUI>
-#     )
-# endif()
-
-# if (BUILD_WEBRTC)
-#     target_sources(Open3D PRIVATE
-#         $<TARGET_OBJECTS:webrtc_server>
-#     )
-# endif()
-
 # Source group for Visual Studio
 add_source_group(utils)
-add_source_group(core)
+# add_source_group(core)
 # add_source_group(common)
 # add_source_group(geometry)
 # add_source_group(tgeometry)

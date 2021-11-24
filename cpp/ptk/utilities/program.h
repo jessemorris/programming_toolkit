@@ -51,6 +51,12 @@ namespace ptk {
             static bool init(int argc, char** argv);
 
             /**
+             * @brief Prints the program options to the terminal window. 
+             * 
+             */
+            static void displayProgramOptions();
+
+            /**
              * @brief Get the Program Options object
              * 
              * @return const ProgramOptions* 

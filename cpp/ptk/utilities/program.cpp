@@ -8,6 +8,8 @@
 #include <string.h>
 
 
+//TODO: really should put program until utils (rename utility)
+
 namespace ptk {
 
     namespace impl {
@@ -78,7 +80,7 @@ namespace ptk {
         program_options.logging_dir = 0;
         program_options.program_dir = 0;
         const char* default_log = "INFO";
-        program_options.log_level = (char*)default_log; //default
+        program_options.log_level = (char*)default_log; //TODO: default
 
 
        
@@ -98,7 +100,21 @@ namespace ptk {
             return &program_options;
         }
         else {
+            PTK_ERROR_MSG("PTK program arguments have not been initalised with init");
             return nullptr;
+        }
+    }
+
+    void Program::displayProgramOptions() {
+        if(is_init) {
+            std::cout << "Program Options:" << std::endl;
+            std::cout << "\t* Program dir: " << std::string(program_options.program_dir) << std::endl;
+            std::cout << "\t* Logging dir: " << std::string(program_options.logging_dir) << std::endl;
+            std::cout << "\t* Log level: " << std::string(program_options.log_level) << std::endl;
+            std::cout << "\t* Program name: " << std::string(program_options.program_name) << std::endl;
+        }
+        else {
+            PTK_ERROR_MSG("Cannot print program options: null");
         }
     }
 

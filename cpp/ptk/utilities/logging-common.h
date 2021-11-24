@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macros.h"
+
 #include <ostream>
 #include <iostream>
 #include <chrono>
@@ -7,6 +9,9 @@
 #include <string>
 #include <ostream>
 #include <sstream>
+
+#include <stdarg.h>
+#include <string.h>
 
 
 //define colour codes for logging
@@ -135,15 +140,47 @@ namespace logging {
             }
     };
 
+
     /**
      * @brief Controls the format of a logging string based on the level of the message.
      * 
      */
     class Formatter {
+        PTK_POINTER_TYPEDEFS(Formatter);
 
         public:
+
             /**
-             * @brief Construct a new Formatter object.
+             * @brief Construct a new Formatter for when formatting (printf) style object is needed.
+             * 
+             * @param level_ Log level.
+             * @param file_  The file the message was invoked from.
+             * @param line_  The line the message was invoked from.
+             * @param fmt_ The message format.
+             */
+            Formatter(const Level& level_, 
+                      const std::string& file_,
+                      int line_,
+                      const char* fmt_,
+                      ...)
+                    :   level(level_),
+                        file(file_),
+                        line(line_) {
+                
+                        char* messageC = (char*)malloc(strlen(fmt_) * sizeof(char));
+                        va_list arglist;
+                        va_start( arglist, fmt_ );
+                        vsprintf(messageC, fmt_, arglist);
+                        va_end( arglist );
+                        
+                        message = std::string(messageC);
+                        free(messageC);
+
+            }
+
+
+            /**
+             * @brief Construct a new Formatter object for when stream logging is used.
              * 
              * @param level_ Log level.
              * @param file_  The file the message was invoked from.
@@ -159,8 +196,10 @@ namespace logging {
                     line(line_),
                     message(message_) {}
 
+
+
             /**
-             * @brief ostream overloader.
+             * @brief ostream overloader. Calls virtual onStreamInput function. 
              * 
              * @param os 
              * @param f 
@@ -233,8 +272,10 @@ namespace logging {
             const Level level;
             const std::string file;
             const int line;
-            const std::string message;
+            std::string message;
     };
+
+
 
     /**
      * @brief Throws an exception using the custom Formatter to display the message.
@@ -249,8 +290,8 @@ namespace logging {
     inline void throwException(const std::string& exceptionType,
                            const std::string& file,
                            int line,
-                           const std::string& message) {
-        throw(Exception_(ptk::logging::Formatter::formatException(exceptionType, file, line, message).toString()));
+                           const char* fmt) {
+        throw(Exception_(ptk::logging::Formatter::formatException(exceptionType, file, line, fmt).toString()));
     }
 
 
