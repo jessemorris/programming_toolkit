@@ -21,9 +21,6 @@ class PluginBaseDetails {
             const std::string& baseName_,
             const DynamicLibraryPath* libraryPath_);
 
-        // PluginBaseDetails(const PluginBaseDetails &);
-        // PluginBaseDetails& operator=(const PluginBaseDetails &);
-
         //TODO: should all be const
         const std::string derivedName;
         const std::string baseName;

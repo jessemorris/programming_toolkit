@@ -8,7 +8,6 @@
 using namespace ptk;
 
 int main() {
-    // std::string path = "/home/jesse/Code/src/programming_toolkit/build/lib";
     TestLoader loader("plugin_example"); 
     // plugins::P dlloader("tatooinePlugin");
     PTK_INFO_MSG("Running plugin main");
