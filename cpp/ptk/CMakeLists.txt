@@ -30,7 +30,7 @@ add_library(ptk)
 
 add_subdirectory(utilities)
 add_subdirectory(plugins)
-# add_subdirectory(core)
+add_subdirectory(core)
 # add_subdirectory(common)
 
 
@@ -39,7 +39,7 @@ add_subdirectory(plugins)
 target_sources(ptk PRIVATE
     $<TARGET_OBJECTS:utilities>
     $<TARGET_OBJECTS:plugins>
-    # $<TARGET_OBJECTS:core>
+    $<TARGET_OBJECTS:core>
     # $<TARGET_OBJECTS:common>
 
 )
@@ -47,7 +47,7 @@ target_sources(ptk PRIVATE
 # Source group for Visual Studio
 add_source_group(utils)
 add_source_group(plugins)
-# add_source_group(core)
+add_source_group(core)
 # add_source_group(common)
 # add_source_group(geometry)
 # add_source_group(tgeometry)
@@ -71,6 +71,8 @@ target_link_options(ptk INTERFACE
     $<$<STREQUAL:$<TARGET_PROPERTY:ptk,TYPE>,STATIC_LIBRARY>:$<LINK_ONLY:${PTK_HIDDEN_3RDPARTY_LINK_OPTIONS}>>)
 
 add_library(ptk::ptk ALIAS ptk)
+
+target_link_libraries(ptk ${CMAKE_DL_LIBS})
 
 include(CMakePackageConfigHelpers)
 
@@ -106,7 +108,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 install(FILES
         "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/ptkConfig.cmake"
         "${PROJECT_BINARY_DIR}/ptkConfigVersion.cmake"
-        "${PROJECT_SOURCE_DIR}/cmake/ptkBuildPlugin.cmake"
+        "${PROJECT_SOURCE_DIR}/cmake/ptkPlugin.cmake"
         DESTINATION "${PTK_INSTALL_CMAKE_DIR}" COMPONENT dev)
 
 # uninstall target

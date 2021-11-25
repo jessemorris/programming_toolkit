@@ -6,6 +6,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+namespace ptk {
+namespace utils {
+
 bool checkFileExists(const std::string& fileName) {
     struct stat info;
     if (stat(fileName.c_str(), &info) == -1) {
@@ -13,3 +16,7 @@ bool checkFileExists(const std::string& fileName) {
     }
     return S_ISREG(info.st_mode);
 }
+
+
+} //utils
+} //ptk

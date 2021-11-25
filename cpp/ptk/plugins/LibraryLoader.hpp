@@ -4,6 +4,8 @@
 #include "naming.hpp"
 #include "details.hpp"
 
+#include "ptk/utilities/logging.h"
+
 #include <memory>
 #include <string>
 
@@ -47,7 +49,10 @@ void registerPlugin(const std::string & class_name, const std::string & base_cla
     //TODO: mame impl log
     std::cout << "registering plugin with name " << class_name << " base type " << base_class_name << std::endl;
     PluginClassDetailsMap& map = getNamedMap();
-    map.emplace(class_name, std::shared_ptr<PluginClassDetails>(class_name, base_class_name));
+    PTK_INFO_MSG(&map);
+    map.emplace(class_name, std::make_shared<PluginClassDetails>(class_name, base_class_name));
+
+
 }
 
 
@@ -129,6 +134,9 @@ public:
 
 
     std::shared_ptr<T> load(const std::string& derived) {
+
+        auto& map1 = library_loader::getNamedMap();
+        PTK_INFO_MSG(&map1);
 
         const PluginClassDetails::Ptr name = library_loader::getClassNaming(derived);
         if(!name) {

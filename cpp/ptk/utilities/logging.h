@@ -30,7 +30,9 @@
 #define PTK_LOG_FORMAT(level, ...) \
     {   \
         std::cout << LOGGING_FORMAT_BASE(level, __VA_ARGS__) << std::endl; \
-    }  
+    } 
+
+#define noop ({;})
 
 //actual output logging messages to standard out
 #ifdef USE_VIZ_DEBUG

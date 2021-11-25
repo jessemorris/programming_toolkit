@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ptk/plugins/plugin.hpp"
-
+#include "ptk/plugins/register.hpp"
 
 class Test : public ptk::plugins::PluginBase {
 
@@ -13,3 +13,5 @@ class Test : public ptk::plugins::PluginBase {
         void onInit() override;
 
 };
+
+PTK_REGISTER_CUSTOM_PLUGIN_LOADER(Test);

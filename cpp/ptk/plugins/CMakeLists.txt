@@ -3,6 +3,7 @@ add_library(plugins OBJECT)
 
 
 target_sources(plugins PRIVATE
+    LibraryLoader.cpp
     naming.cpp
     details.cpp
     plugin.cpp

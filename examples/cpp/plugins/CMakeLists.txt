@@ -11,11 +11,9 @@ add_plugin(plugin_example
      testPlugin.cpp    
 )
 
+install_plugin(plugin_example)
 
-# Include directories
-# target_include_directories(cpp_plugins PUBLIC
-#         include
-#         )
+
 
 
 

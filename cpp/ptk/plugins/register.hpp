@@ -6,6 +6,9 @@
 
 #include "LibraryLoader.hpp"
 
+using namespace ptk;
+using namespace ptk::plugins;
+
 #define PTK_REGISTER_CUSTOM_PLUGIN_LOADER(PluginType)   \
     using PluginType##Loader = DynamicLoader<PluginType>;    \
     using PluginType##Ptr = std::shared_ptr<PluginType>;
@@ -19,7 +22,7 @@
         typedef  Base _base; \
         ProxyExec ## UniqueID() \
         { \
-        class_loader::registerPlugin<_derived, _base>(#Derived, #Base); \
+        library_loader::registerPlugin<_derived, _base>(#Derived, #Base); \
         }   \
     }; \
     static ProxyExec ## UniqueID g_register_plugin_ ## UniqueID; \

@@ -1,5 +1,7 @@
 #include "ptk/plugins/naming.hpp"
 #include "ptk/utilities/fileSystem.hpp"
+#include "ptk/core/package.hpp"
+#include "ptk/utilities/logging.h"
 
 #include <iostream>
 
@@ -40,7 +42,7 @@ DynamicLibraryPath::DynamicLibraryPath(const std::string& baseLib_)
             isFound(false) {
         
         isFound = constructFullLibPath();
-        std::cout << "Lib: " << fullLibPath << " found: " << isFound << std::endl;
+        PTK_INFO_MSG("Lib: " << fullLibPath << " found: " << isFound);
 
     }
 
@@ -62,7 +64,7 @@ bool DynamicLibraryPath::isPathValid() const {
 
 bool DynamicLibraryPath::constructFullLibPath() {
     //TODO::check forms etc
-    fullLibPath = "./lib" + baseLib + ".so";
+    fullLibPath = core::constructPackagePath(baseLib);
     return validateFullLibPath();
 }
 

@@ -9,7 +9,7 @@ foreach(dep IN ITEMS @PTK_3RDPARTY_EXTERNAL_MODULES@)
 endforeach()
 
 include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/ptkBuildPlugin.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/ptkPlugin.cmake")
 
 foreach(dep IN ITEMS @PTK_3RDPARTY_HEADER_TARGETS@)
     if(TARGET ${dep})
