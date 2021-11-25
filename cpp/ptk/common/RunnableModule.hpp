@@ -50,18 +50,39 @@ class RunnableModule {
             return result;
         }
 
-        void printRunnableOptions() const;
-        const Time getExecutionDuration() const ;
+        void printRunnableOptions() const {
+
+        }
+
+        const Time getExecutionDuration() const {
+
+        }
+
         const RunnableOptions* getOptions() {
             return options.get();
         }
 
+        const OutputSharedPtr getLastOutput() const  {
+            return lastOutput;
+        }
+
+        const InputSharedPtr getLastInput() const {
+            return lastInput;
+        }
+
 
     protected:
+        /**
+         * @brief The actual function that executes the algorithm.
+         * 
+         * @param input InputSharedPtr
+         * @return OutputSharedPtr 
+         */
         OutputSharedPtr execute(InputSharedPtr input) = 0;
 
     private:
-        //TODo: add run in thread etc?
+        //TODO: add run in thread etc?
+        //TODO: collect stats 
 
 
         RunnableOptions::UniquePtr options;
