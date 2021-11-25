@@ -4,10 +4,10 @@
 # In comparison, ptk_set_global_properties() sets properties for the PTK
 # lib, and targets that links to the PTK lib, e.g pybind, unit tests, etc.
 function(ptk_set_ptk_lib_properties target)
-    cmake_parse_arguments(arg "HIDDEN" "" "" ${ARGN})
-    if(NOT BUILD_SHARED_LIBS)
-        target_compile_definitions(${target} PUBLIC PTK_STATIC)
-    endif()
+    # cmake_parse_arguments(arg "HIDDEN" "" "" ${ARGN})
+    # if(NOT BUILD_SHARED_LIBS)
+    #     target_compile_definitions(${target} PUBLIC PTK_STATIC)
+    # endif()
     if (arg_HIDDEN)
         set_target_properties(${target} PROPERTIES
                         CXX_VISIBILITY_PRESET hidden
@@ -26,7 +26,7 @@ configure_file("${PROJECT_SOURCE_DIR}/cpp/ptk/ptkConfig.h.in"
                "${PROJECT_SOURCE_DIR}/cpp/ptk/ptkConfig.h")
 
 
-add_library(ptk)
+add_library(ptk SHARED)
 
 add_subdirectory(utilities)
 add_subdirectory(plugins)

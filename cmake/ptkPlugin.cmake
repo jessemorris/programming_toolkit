@@ -2,7 +2,7 @@ function(add_plugin libName)
     add_library(${libName} SHARED
         ${ARGN}
     )
-    target_link_libraries(${libName} ptk ${CMAKE_DL_LIBS})
+    target_link_libraries(${libName} ptk::ptk ${CMAKE_DL_LIBS})
 
 endfunction()
 
@@ -23,7 +23,7 @@ function(find_plugin_libs libName libPath)
 
     foreach(of_libname IN LISTS OF_LIB_LIST)
         message("Trying to find ${of_libname} library")
-
+        # message("CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}")
         find_library(of_lib_path ${of_libname} HINTS ${CMAKE_BINARY_DIR}/lib)
         if(NOT of_lib_path)
             message(WARNING "${of_libname} NOT FOUND in ${CMAKE_BINARY_DIR}/lib.")

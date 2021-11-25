@@ -20,6 +20,11 @@ const PluginClassDetails::Ptr getClassNaming(const std::string& derived) {
     }
 }
 
+void clearNamedMap() {
+    PluginClassDetailsMap& map = getNamedMap();
+    map.clear();
+}
+
 } //library_loader
 } //plugins
 } //ptk

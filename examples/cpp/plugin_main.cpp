@@ -13,18 +13,11 @@ int main() {
     // plugins::P dlloader("tatooinePlugin");
     PTK_INFO_MSG("Running plugin main");
     TestPtr test = loader.load("Test");
-    // PipelinePluginPtr special = dlloader.load("Tatooine");
-    // // PipelinePluginPtr pipeline = dlloader.load("Pipeline");
+    PTK_INFO_MSG("here");
+    //TODO: without this the program seg faults becuase I dont think the constructor on the 
+    //static lib (which contains shared ptr's) is called in the same way. Need better way of doing this
+    plugins::library_loader::clearNamedMap();
 
-	// // planet->onInit();
-    // // planet->spinOnce();
-
-    // std::cout << special->getLibraryPath() <<std::endl;
-    // std::cout << special->getName() <<std::endl;
-    // std::cout << special->getPluginBaseName() <<std::endl;
-
-    // std::cout << "Unloading " << path << std::endl;
-	// dlloader.DLCloseLib();
 
 
 }

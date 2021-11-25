@@ -1,5 +1,7 @@
-#ifndef PTK_PLUGINS_LIBRARY_LOADER
-#define PTK_PLUGINS_LIBRARY_LOADER
+// #ifndef PTK_PLUGINS_LIBRARY_LOADER
+// #define PTK_PLUGINS_LIBRARY_LOADER
+#pragma once
+
 
 #include "naming.hpp"
 #include "details.hpp"
@@ -18,6 +20,23 @@ namespace plugins {
 
 namespace library_loader {
 
+// #if defined(_MSC_VER)
+// #   define DLL_EXPORT __declspec(dllexport)
+// #   define DLL_IMPORT __declspec(dllimport)
+// #elif defined(__GNUC__)
+// #   define DLL_EXPORT __attribute__((visibility("default")))
+// #   define DLL_IMPORT
+// #   if __GNUC__ > 4
+// #       define DLL_LOCAL __attribute__((visibility("hidden")))
+// #   else
+// #       define DLL_LOCAL
+// #   endif
+// #else
+// #   error("Don't know how to export shared object libraries")
+// #endif
+
+
+// #define LIBRARY_PUBLIC_EXPORT DLL_EXPORT
 using PluginClassDetailsMap = std::map<std::string, PluginClassDetails::Ptr>;
 
 /**
@@ -49,11 +68,12 @@ void registerPlugin(const std::string & class_name, const std::string & base_cla
     //TODO: mame impl log
     std::cout << "registering plugin with name " << class_name << " base type " << base_class_name << std::endl;
     PluginClassDetailsMap& map = getNamedMap();
-    PTK_INFO_MSG(&map);
     map.emplace(class_name, std::make_shared<PluginClassDetails>(class_name, base_class_name));
 
 
 }
+
+void clearNamedMap();
 
 
 } //library_loader
@@ -114,29 +134,10 @@ public:
         dynamicLibClose();
     }
 
-    void dynamicLibOpen() override {
-        if(!libPath.isPathValid()) {
-            std::cout << "LibPath " << libPath.getFullLibraryPath() << " could not be opened becuase it does not exist" << std::endl;
-            return;
-        }
-
-        if (!(_handle = dlopen(libPath.getFullLibraryPathCStr(), RTLD_NOW | RTLD_LAZY))) {
-            std::cerr << dlerror() << std::endl;
-        }
-    }
-
-    void dynamicLibClose() override
-    {
-        if (dlclose(_handle) != 0) {
-            std::cerr << dlerror() << std::endl;
-        }
-    }
-
 
     std::shared_ptr<T> load(const std::string& derived) {
 
         auto& map1 = library_loader::getNamedMap();
-        PTK_INFO_MSG(&map1);
 
         const PluginClassDetails::Ptr name = library_loader::getClassNaming(derived);
         if(!name) {
@@ -176,6 +177,25 @@ public:
 
 private:
 
+    void dynamicLibOpen() override {
+        if(!libPath.isPathValid()) {
+            std::cout << "LibPath " << libPath.getFullLibraryPath() << " could not be opened becuase it does not exist" << std::endl;
+            return;
+        }
+
+        if (!(_handle = dlopen(libPath.getFullLibraryPathCStr(), RTLD_NOW | RTLD_LAZY))) {
+            std::cerr << dlerror() << std::endl;
+        }
+    }
+
+    void dynamicLibClose() override {
+        if (dlclose(_handle) != 0) {
+            std::cerr << dlerror() << std::endl;
+        }
+        // PTK_INFO_MSG("Closing dyamic library " << libPath.getBaseLibName());
+    }
+
+
     void* _handle;
     // const std::string _pathToLib;
     const DynamicLibraryPath libPath;
@@ -186,4 +206,4 @@ private:
 } //pluginss
 } //ptk
 
-#endif
+// #endif

@@ -30,5 +30,6 @@ endmacro()
 
 add_subdirectory(plugins)
 
+
 ptk_add_example(plugin_main)
 ptk_add_example(statistics)

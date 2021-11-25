@@ -1,7 +1,7 @@
 #pragma once
 
 // Note: do not modify ptk.h, modify ptk.h.in instead
-#include "ptk/ptkConfig.h"
+// #include "ptk/ptkConfig.h"
 
 //COMMON
 #include "ptk/common/is-set.h"

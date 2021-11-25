@@ -1,7 +1,9 @@
 #include "plugin.hpp"
-
+#include "ptk/plugins/LibraryLoader.hpp"
 namespace ptk {
 namespace plugins {
+
+
 
 void PluginBase::setDetails(std::unique_ptr<plugins::PluginBaseDetails> details_) {
     //assume that this always gets called in the plugin loader
