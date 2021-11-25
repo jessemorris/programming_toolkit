@@ -13,6 +13,7 @@ class DynamicLoader;
 class PluginBase;
 class DynamicLibraryPath;
 
+//TODO: a better name might be reflectionDetails 
 class PluginBaseDetails {
 
     public:
