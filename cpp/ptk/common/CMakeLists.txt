@@ -3,7 +3,7 @@ add_library(common OBJECT)
 
 
 target_sources(common PRIVATE
-   
+   Algorithm.cpp
 )
 
 ptk_set_global_properties(common)

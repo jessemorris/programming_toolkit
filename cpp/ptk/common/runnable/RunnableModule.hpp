@@ -44,14 +44,14 @@ class RunnableModule {
             :   options(options_),
                 lastInput(nullptr),
                 lastOutput(nullptr),
-                count(0) {}
+                executionCount(0) {}
 
         //this one will just use the detault options
         RunnableModule()
             :   options(std::make_unique<RunnableOptions>()),
                 lastInput(nullptr),
                 lastOutput(nullptr),
-                count(0) {}
+                executionCount(0) {}
 
 
 
@@ -92,7 +92,7 @@ class RunnableModule {
          * 
          * @return const RunnableOptions* 
          */
-        const RunnableOptions* getOptions() {
+        const RunnableOptions* getRunnableOptions() {
             return options.get();
         }
 
@@ -224,7 +224,6 @@ class RunnableModule {
 
         //TODO: collect stats 
         CallbackList onExecuteCallbacks;
-
 
         int executionCount;
         RunnableOptions::UniquePtr options;

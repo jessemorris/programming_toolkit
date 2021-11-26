@@ -31,7 +31,7 @@ add_library(ptk SHARED)
 add_subdirectory(utilities)
 add_subdirectory(plugins)
 add_subdirectory(core)
-# add_subdirectory(common)
+add_subdirectory(common)
 
 
 # note: adding at least one real source file to any target that references
@@ -40,7 +40,7 @@ target_sources(ptk PRIVATE
     $<TARGET_OBJECTS:utilities>
     $<TARGET_OBJECTS:plugins>
     $<TARGET_OBJECTS:core>
-    # $<TARGET_OBJECTS:common>
+    $<TARGET_OBJECTS:common>
 
 )
 
@@ -48,7 +48,7 @@ target_sources(ptk PRIVATE
 add_source_group(utils)
 add_source_group(plugins)
 add_source_group(core)
-# add_source_group(common)
+add_source_group(common)
 # add_source_group(geometry)
 # add_source_group(tgeometry)
 # add_source_group(io)
