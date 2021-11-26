@@ -5,6 +5,7 @@
 
 //COMMON
 #include "ptk/common/is-set.h"
+#include "ptk/common/runnable/RunnableModule.hpp"
 
 //CORE
 #include "ptk/core/program.h"

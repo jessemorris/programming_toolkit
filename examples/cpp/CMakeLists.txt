@@ -29,7 +29,9 @@ endmacro()
 
 
 add_subdirectory(plugins)
+add_subdirectory(common)
 
 
 ptk_add_example(plugin_main)
 ptk_add_example(statistics)
+ptk_add_example(runnable_main)

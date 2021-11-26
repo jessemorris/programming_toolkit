@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <iostream>
 
 
 // These macros were inspired mainly on Maplab's macros
@@ -18,3 +19,7 @@
 #define PTK_DELETE_COPY_CONSTRUCTORS(TypeName) \
   TypeName(const TypeName&) = delete;             \
   void operator=(const TypeName&) = delete
+
+
+
+#define PTK_STDOUT(stream) std::cout << stream << std::endl;

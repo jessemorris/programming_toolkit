@@ -1,7 +1,7 @@
 #ifndef PTK_COMMON_ALGORITHM
 #define PTK_COMMON_ALGORITHM
 
-#include "ptk/common/RunnableModule.hpp"
+#include "ptk/common/runnable/RunnableModule.hpp"
 
 #include "ptk/utilities/macros.h"
 #include "ptk/utilities/logging.h"

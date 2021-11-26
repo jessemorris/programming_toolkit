@@ -5,7 +5,7 @@
 #include <chrono>
 
 namespace ptk {
-
+//TODO: improve timing features with duration etc
 
     /**
      * @brief Represents a time object with seconds and nano seconds. Makes it easy to
@@ -15,11 +15,9 @@ namespace ptk {
     class Time {
 
         public:
-            Time() {
-                // std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
-                // auto duration = now.time_since_epoch();
-                
-            }
+            Time() 
+                :   sec(0),
+                    nsec(0) {}
 
             Time(uint32_t sec_, uint32_t nsec_)
                 :   sec(sec_), nsec(nsec_) {}
