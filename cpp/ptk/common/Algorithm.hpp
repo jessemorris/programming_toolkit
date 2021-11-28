@@ -28,6 +28,7 @@ class Algorithm {
         PTK_DELETE_COPY_CONSTRUCTORS(Algorithm);
 
         //Options here -> plus no options constructor
+        //Make option const& instead?
         Algorithm();
         Algorithm(AlgorithmOptions::UniquePtr options_);
         virtual ~Algorithm() = default;

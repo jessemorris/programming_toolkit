@@ -1,6 +1,7 @@
 #pragma once
 
 #include "macros.h"
+#include "outputHandler.hpp"
 
 #include <ostream>
 #include <iostream>
@@ -140,13 +141,19 @@ namespace logging {
             }
     };
 
+    class LogRecord; //forward
+
+    const std::string formatLogRecord(const LogRecord& record);
+    const std::string colouriseRecord(const LogRecord& record);
+    const std::string colouriseMessage(const std::string& message, const Level& level);
+
 
     /**
-     * @brief Controls the format of a logging string based on the level of the message.
+     * @brief Controls the recording of a logging string based on the level of the message.
      * 
      */
-    class Formatter {
-        PTK_POINTER_TYPEDEFS(Formatter);
+    class LogRecord : public utils::Record {
+        PTK_POINTER_TYPEDEFS(LogRecord);
 
         public:
 
@@ -158,13 +165,13 @@ namespace logging {
              * @param line_  The line the message was invoked from.
              * @param fmt_ The message format.
              */
-            Formatter(const Level& level_, 
+            LogRecord(const Level& level_, 
                       const std::string& file_,
                       int line_,
                       const char* fmt_,
                       ...)
                     :   level(level_),
-                        file(file_),
+                        file(extractFile(file_)),
                         line(line_) {
                 
                         char* messageC = (char*)malloc(strlen(fmt_) * sizeof(char));
@@ -180,19 +187,19 @@ namespace logging {
 
 
             /**
-             * @brief Construct a new Formatter object for when stream logging is used.
+             * @brief Construct a new Record object for when stream logging is used.
              * 
              * @param level_ Log level.
              * @param file_  The file the message was invoked from.
              * @param line_  The line the message was invoked from.
              * @param message_ The actual message.
              */
-            Formatter(const Level& level_, 
+            LogRecord(const Level& level_, 
                       const std::string& file_,
                       int line_,
                       const std::string& message_)
                 :   level(level_),
-                    file(file_),
+                    file(extractFile(file_)),
                     line(line_),
                     message(message_) {}
 
@@ -205,22 +212,23 @@ namespace logging {
              * @param f 
              * @return std::ostream& 
              */
-            friend std::ostream& operator<<(std::ostream& os, const Formatter& f) {
-                os << f.toString();
+            friend std::ostream& operator<<(std::ostream& os, const LogRecord& record) {
+                os << colouriseRecord(record);
                 return os;
             }
+
+            inline const Level& getLevel() const {return level; }
+            inline const std::string& getFile() const {return file;}
+            inline const int getLine() const {return line; }
+            inline const std::string& getMessage() const {return message; }
 
             /**
              * @brief Writes the formatter object to a string with the desired format.
              * 
              * @return const std::string 
              */
-            const std::string toString() const {
-                std::stringstream ss;
-                ss << "[" << getLogLevel(level) << "] ["
-                   << extractFile() << ": " << line << "] " << message;
-                std::string log =  ss.str();
-                return colouriseMessage(log);
+            const std::string toString() const override {
+                return formatLogRecord(*this);
             }
             
 
@@ -233,11 +241,11 @@ namespace logging {
              * @param message The exception message.
              * @return const Formatter 
              */
-            static const Formatter formatException(const std::string& exceptionType, 
+            static const LogRecord formatException(const std::string& exceptionType, 
                                                    const std::string& file_,
                                                    int line_,
                                                    const std::string& message) {
-                return Formatter(Level::EXCEPTION, file_, line_, message);
+                return LogRecord(Level::EXCEPTION, file_, line_, message);
                 
             }
 
@@ -264,8 +272,8 @@ namespace logging {
              * 
              * @return const std::string 
              */
-            const std::string extractFile() const {
-                return file.substr(file.rfind("/") + 1);
+            static const std::string extractFile(const std::string& filePath) {
+                return filePath.substr(filePath.rfind("/") + 1);
             }
 
         private:
@@ -274,6 +282,28 @@ namespace logging {
             const int line;
             std::string message;
     };
+
+
+
+    inline const std::string formatLogRecord(const LogRecord& record) {
+        std::stringstream ss;
+        ss << "[" << getLogLevel(record.getLevel()) << "] ["
+            << record.getFile() << ": " << record.getLine() << "] " << record.getMessage();
+        return ss.str();
+    }
+
+    inline const std::string colouriseRecord(const LogRecord& record) {
+        return colouriseMessage(formatLogRecord(record), record.getLevel());
+    }
+
+    inline const std::string colouriseMessage(const std::string& message, const Level& level) {
+        std::stringstream ss;
+        ss << ptk::logging::ColourModifier::fromLogLevel(level) 
+            << message 
+            << ptk::logging::ColourModifier::resetColour();
+        return ss.str();
+    }
+
 
 
 
@@ -291,7 +321,7 @@ namespace logging {
                            const std::string& file,
                            int line,
                            const char* fmt) {
-        throw(Exception_(ptk::logging::Formatter::formatException(exceptionType, file, line, fmt).toString()));
+        throw(Exception_(ptk::logging::LogRecord::formatException(exceptionType, file, line, fmt).toString()));
     }
 
 

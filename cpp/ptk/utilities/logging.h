@@ -1,7 +1,16 @@
 #pragma once
 
 #include "logging-common.h"
+#include "ptk/utilities/outputHandler.hpp"
 
+namespace ptk {
+namespace utils {
+namespace impl {
+    OutputHandler::ConstPtr getLogger();
+
+} //impl
+} //utils
+} //ptk
 #define PTK_DEFINE_EXCEPTION(exceptionName) \
     class exceptionName : public std::runtime_error {   \
         public: \
@@ -13,23 +22,32 @@
 
 
 #define LOGGING_STREAM_BASE(level, stream) \
-    ptk::logging::Formatter(level, __FILE__, __LINE__, stream)
+    {   \
+        const ptk::logging::LogRecord* log = new ptk::logging::LogRecord(level, __FILE__, __LINE__, stream); \
+        ptk::utils::impl::getLogger()->manageRecord(log);  \
+        delete log; \
+    }
+    
 
 #define LOGGING_FORMAT_BASE(level, ...) \
-    ptk::logging::Formatter(level, __FILE__, __LINE__, __VA_ARGS__)
-
+    {   \
+        const ptk::logging::LogRecord*  log = new ptk::logging::LogRecord(level, __FILE__, __LINE__, __VA_ARGS__);    \
+        ptk::utils::impl::getLogger()->manageRecord(log);  \
+        delete log; \
+    }
+    
 
 #define PTK_LOG_STREAM(level, stream) \
     {   \
         std::stringstream ss;   \
         ss << stream;                \
-        std::cout << LOGGING_STREAM_BASE(level, ss.str()) << std::endl; \
+        LOGGING_STREAM_BASE(level, ss.str()); \
     }  
 
 
 #define PTK_LOG_FORMAT(level, ...) \
     {   \
-        std::cout << LOGGING_FORMAT_BASE(level, __VA_ARGS__) << std::endl; \
+        LOGGING_FORMAT_BASE(level, __VA_ARGS__); \
     } 
 
 #define noop ({;})
