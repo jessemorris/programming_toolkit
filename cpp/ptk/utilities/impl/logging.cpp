@@ -5,7 +5,7 @@
 namespace ptk {
 namespace utils {
 namespace impl {
-    OutputHandler::ConstPtr getLogger() {
+    OutputHandler::Ptr getLogger() {
         return OutputHandler::getHandler<LoggingHandler>("ptk-log");
     }
 

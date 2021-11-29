@@ -41,7 +41,7 @@ class RunnableResult {
              * and runtime.
              * 
              */
-            void printDetails() const {
+            void printDetails() {
                 PTK_STDOUT(formatAllDetails());
             }
 
@@ -49,7 +49,7 @@ class RunnableResult {
              * @brief Prints only the result of the runnable to stdin.
              * 
              */
-            void printResult() const {
+            void printResult() {
                 PTK_STDOUT(formatResults());
             }
 
@@ -58,7 +58,7 @@ class RunnableResult {
              * and runtime.
              * 
              */
-            void logDetails() const {
+            void logDetails() {
                 PTK_INFO_MSG(formatAllDetails());
             }
 
@@ -66,12 +66,12 @@ class RunnableResult {
              * @brief Prints only the result using the PTK_INFO_MSG macro. 
              * 
              */
-            void logResult() const  {
+            void logResult()  {
                 PTK_INFO_MSG(formatResults());
             }
 
         private:
-            std::string formatAllDetails() const {
+            std::string formatAllDetails() {
                 std::stringstream ss;
                 ss << "\nResult: " << *result << std::endl;
                 ss << "Input: " << *input << std::endl;
@@ -79,7 +79,7 @@ class RunnableResult {
                 return ss.str();
             } 
 
-            std::string formatResults() const {
+            std::string formatResults() {
                 std::stringstream ss;
                 ss << "\nResult: " << *result; 
                 return ss.str();

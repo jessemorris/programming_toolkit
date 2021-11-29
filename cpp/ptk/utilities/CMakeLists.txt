@@ -7,6 +7,8 @@ target_sources(utilities PRIVATE
    impl/outputHandler.cpp
    impl/loggingHandler.cpp
    impl/logging.cpp
+   impl/fileHandler.cpp
+   impl/logging-common.cpp
 )
 
 ptk_set_global_properties(utilities)

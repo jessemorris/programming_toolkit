@@ -13,5 +13,27 @@ namespace utils {
      */
     bool checkFileExists(const std::string& fileName);
 
-}
-}
+    /**
+     * @brief Checks if the directory given the directory path exists
+     * 
+     * @param directory 
+     * @return true 
+     * @return false 
+     */
+    bool checkDirectoryExists(const std::string &directory);
+
+    /**
+     * @brief Gets the home directory of the system using PWD
+     * 
+     * @return const std::string 
+     */
+    const std::string getHomeDirectory();
+
+    static const std::string getEnvVar(const std::string &envVar);
+
+} //utils
+
+
+const std::string getDefaultPtkLoggingDir();
+
+} //ptk

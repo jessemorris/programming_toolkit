@@ -1,7 +1,6 @@
 #pragma once
 
 #include "macros.h"
-#include "outputHandler.hpp"
 
 #include <ostream>
 #include <iostream>
@@ -18,6 +17,8 @@
 //define colour codes for logging
 //https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
 namespace ptk {
+
+
 namespace logging {
 
     enum Level {
@@ -26,6 +27,31 @@ namespace logging {
         WARN,
         ERROR,
         EXCEPTION
+    };
+
+
+    /**
+     * @brief Base writeable that can be processed by the Output Handler classes
+     * 
+     */
+    class Record {
+        public:
+            Record() = default;
+            virtual ~Record() = default;
+
+            virtual const std::string toString() const = 0;
+
+            /**
+             * @brief ostream overloader. Calls virtual toString function. 
+             * 
+             * @param os 
+             * @param f 
+             * @return std::ostream& 
+             */
+            inline friend std::ostream& operator<<(std::ostream& os, const Record& record) {
+                os << record.toString();
+                return os;
+            }
     };
 
 
@@ -143,6 +169,7 @@ namespace logging {
 
     class LogRecord; //forward
 
+
     const std::string formatLogRecord(const LogRecord& record);
     const std::string colouriseRecord(const LogRecord& record);
     const std::string colouriseMessage(const std::string& message, const Level& level);
@@ -152,7 +179,7 @@ namespace logging {
      * @brief Controls the recording of a logging string based on the level of the message.
      * 
      */
-    class LogRecord : public utils::Record {
+    class LogRecord : public Record {
         PTK_POINTER_TYPEDEFS(LogRecord);
 
         public:
@@ -169,21 +196,7 @@ namespace logging {
                       const std::string& file_,
                       int line_,
                       const char* fmt_,
-                      ...)
-                    :   level(level_),
-                        file(extractFile(file_)),
-                        line(line_) {
-                
-                        char* messageC = (char*)malloc(strlen(fmt_) * sizeof(char));
-                        va_list arglist;
-                        va_start( arglist, fmt_ );
-                        vsprintf(messageC, fmt_, arglist);
-                        va_end( arglist );
-                        
-                        message = std::string(messageC);
-                        free(messageC);
-
-            }
+                      ...);
 
 
             /**
@@ -197,11 +210,7 @@ namespace logging {
             LogRecord(const Level& level_, 
                       const std::string& file_,
                       int line_,
-                      const std::string& message_)
-                :   level(level_),
-                    file(extractFile(file_)),
-                    line(line_),
-                    message(message_) {}
+                      const std::string& message_);
 
 
 
@@ -257,13 +266,7 @@ namespace logging {
              * @param message 
              * @return const std::string 
              */
-            const std::string colouriseMessage(const std::string& message) const {
-                std::stringstream ss;
-                ss << ptk::logging::ColourModifier::fromLogLevel(level) 
-                   << message 
-                   << ptk::logging::ColourModifier::resetColour();
-                return ss.str();
-            }
+            const std::string colouriseMessage(const std::string& message) const;
 
             /**
              * @brief Formats the __FILE__ marcro to online the actual file the message was called.
@@ -272,9 +275,7 @@ namespace logging {
              * 
              * @return const std::string 
              */
-            static const std::string extractFile(const std::string& filePath) {
-                return filePath.substr(filePath.rfind("/") + 1);
-            }
+            static const std::string extractFile(const std::string& filePath);
 
         private:
             const Level level;

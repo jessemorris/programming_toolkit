@@ -2,8 +2,13 @@
 
 #include "ptk/utilities/macros.h"
 #include <iostream>
+#include <string.h>
+#include <string>
+#include <vector>
 
 namespace ptk {
+
+    //this might need to be user home + 
 
     /**
      * @brief Defines a set of options for this program and are available from the Program class.
@@ -15,17 +20,18 @@ namespace ptk {
         
 
         PTK_POINTER_TYPEDEFS(ProgramOptions);
+        using ProgramArgvs = std::vector<std::string>;
 
-        char* program_dir;
-        char* logging_dir;
-        char* program_name;
-        char* log_level;
-        char** program_argv;
+        std::string program_dir;
+        std::string logging_dir; //TODO: default options
+        std::string program_name;
+        std::string log_level;
+        ProgramArgvs program_argv;
         int program_argc;
         pid_t pid;
 
         friend std::ostream& operator<<(std::ostream& out, const ProgramOptions& object) {
-			out << "Progam dir: " << object.program_dir << std::endl;
+			out << "Logging dir: " << object.logging_dir << std::endl;
 			return out;
 		}
 

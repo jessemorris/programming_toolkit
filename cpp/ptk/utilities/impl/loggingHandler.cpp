@@ -7,10 +7,10 @@ namespace utils {
 namespace impl {
 
 LoggingHandler::LoggingHandler(const std::string& name_)
-    : OutputHandler(name_) {}
+    :   OutputHandler(name_) {}
 
-void LoggingHandler::handle(const Record* record) const {
-    std::cout << *record << std::endl;
+void LoggingHandler::handle(const std::string& log) {
+    std::cout << log << std::endl;
 }
 
 

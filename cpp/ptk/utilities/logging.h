@@ -6,7 +6,7 @@
 namespace ptk {
 namespace utils {
 namespace impl {
-    OutputHandler::ConstPtr getLogger();
+    OutputHandler::Ptr getLogger();
 
 } //impl
 } //utils
@@ -23,17 +23,15 @@ namespace impl {
 
 #define LOGGING_STREAM_BASE(level, stream) \
     {   \
-        const ptk::logging::LogRecord* log = new ptk::logging::LogRecord(level, __FILE__, __LINE__, stream); \
-        ptk::utils::impl::getLogger()->manageRecord(log);  \
-        delete log; \
+        const ptk::logging::LogRecord log(level, __FILE__, __LINE__, stream); \
+        ptk::utils::impl::getLogger()->log(log);  \
     }
     
 
 #define LOGGING_FORMAT_BASE(level, ...) \
     {   \
-        const ptk::logging::LogRecord*  log = new ptk::logging::LogRecord(level, __FILE__, __LINE__, __VA_ARGS__);    \
-        ptk::utils::impl::getLogger()->manageRecord(log);  \
-        delete log; \
+        const ptk::logging::LogRecord  log(level, __FILE__, __LINE__, __VA_ARGS__);    \
+        ptk::utils::impl::getLogger()->log(log);  \
     }
     
 

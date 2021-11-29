@@ -6,8 +6,8 @@ int main(int argc, char **argv) {
 
     ptk::Program::init(argc, argv);
 
-    // const ptk::ProgramOptions* options = ptk::Program::getProgramOptions();
-    // ptk::Program::displayProgramOptions();
+    const ptk::ProgramOptions* options = ptk::Program::getProgramOptions();
+    ptk::Program::displayProgramOptions();
     std::vector<int> vec;
     PTK_WARN_MSG(&vec);
     PTK_INFO_MSG("Hello " << 10);
